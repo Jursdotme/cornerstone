@@ -1,0 +1,35 @@
+aside.footer-bar {
+  @include section-wrapper(#fff, $gutter*3);
+
+  .footer-bar-content {
+    @include fixed-container;
+
+    > .footer-bar-widget {
+      @include media($lg) {
+        @include span-columns(4 of 12);
+      }
+      @include media($md) {
+        @include span-columns(4 of 12);
+      }
+      @include media($sm) {
+        @include span-columns(4 of 12);
+      }
+      @include media($xs) {
+        @include span-columns(12);
+      }
+    }
+  }
+}
+
+.widget ul a {
+  text-decoration: none;
+}
+
+.widget-area {
+  margin-bottom: $gutter;
+}
+
+.widget_search {
+  // searchform has no height, this is a work around.
+  margin-bottom: $gutter+36;
+}

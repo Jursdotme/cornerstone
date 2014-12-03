@@ -1,0 +1,23 @@
+header.header {
+  @include fixed-container;
+  @include pad(1em);
+  .logo {
+    @include media($xs) {
+      @include span-columns(12);
+    }
+    @include media($sm-up) {
+      @include span-columns(3);
+    }
+
+    img {
+      @include media($xs) {
+        width: 57%;
+      }
+
+      @include media($sm-up) {
+        float: left;
+        width: 300px;
+      }
+    }
+  }
+}
