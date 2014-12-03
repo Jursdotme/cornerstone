@@ -2,6 +2,8 @@
 
 <?php get_template_part('partials/frontpage_slider') ?>
 
+<div class="content-wrapper">
+
 	<main role="main">
 		<!-- section -->
 		<section>
@@ -12,18 +14,6 @@
 
 			<!-- article -->
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-
-				<div class="hover-tile-outer">
-				  <div class="hover-tile-container">
-				    <div class="hover-tile hover-tile-visible">
-				      Hover
-				    </div>
-				    <div class="hover-tile hover-tile-hidden">
-				      <h4>Hidden Copy</h4>
-				      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde, hic, dolore, labore,provident eligendi fugiat ad exercitationem.</p>
-				    </div>
-				  </div>
-				</div>
 
 				<?php the_content(); ?>
 
@@ -40,6 +30,8 @@
 
 	</main>
 
-<?php get_sidebar(); ?>
+	<?php get_sidebar(); ?>
+
+</div>
 
 <?php get_footer(); ?>

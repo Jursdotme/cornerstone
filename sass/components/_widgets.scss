@@ -1,21 +1,57 @@
-aside.footer-bar {
-  @include section-wrapper(#fff, $gutter*3);
+body.one-column {
+  aside.sidebar {
+    // @include section-wrapper(#fff, $gutter*3);
 
-  .footer-bar-content {
-    @include fixed-container;
+    .sidebar-content {
+      @include fixed-container;
 
-    > .footer-bar-widget {
-      @include media($lg) {
-        @include span-columns(4 of 12);
+      > .sidebar-widget {
+        @include media($lg) {
+          @include span-columns(4 of 12);
+        }
+        @include media($md) {
+          @include span-columns(4 of 12);
+        }
+        @include media($sm) {
+          @include span-columns(4 of 12);
+        }
+        @include media($xs) {
+          @include span-columns(12);
+        }
       }
-      @include media($md) {
-        @include span-columns(4 of 12);
-      }
-      @include media($sm) {
-        @include span-columns(4 of 12);
-      }
-      @include media($xs) {
-        @include span-columns(12);
+    }
+  }
+}
+
+body.two-column {
+  &.sidebar-left {
+    aside.sidebar {
+      @include shift(-12);
+      @include pad(0 0 0 1em);
+    }
+  }
+  aside.sidebar {
+
+    @include span-columns(4);
+    @include pad(0 1em 0 0 );
+    @include omega();
+
+
+    .sidebar-content {
+
+      > .sidebar-widget {
+        @include media($lg) {
+          @include span-columns(12);
+        }
+        @include media($md) {
+          @include span-columns(12);
+        }
+        @include media($sm) {
+          @include span-columns(12);
+        }
+        @include media($xs) {
+          @include span-columns(12);
+        }
       }
     }
   }

@@ -1,4 +1,21 @@
 <!-- wrapper -->
+
+<?php
+// define page layout
+if( get_theme_mod( 'page_layout' ) == 0 ) {
+
+  $layout = 'one-column';
+
+} elseif( get_theme_mod( 'page_layout' ) == 1 ) {
+
+  $layout = 'two-column sidebar-left';
+
+} elseif( get_theme_mod( 'page_layout' ) == 2 ) {
+
+  $layout = 'two-column';
+  
+} ?>
+
 <?php if( get_theme_mod( 'page_margins' ) == 1 ) { ?>
 
   <?php
@@ -15,11 +32,12 @@
     } elseif( get_theme_mod( 'content_shadow' ) == 3 ) {
       $content_shadow = 'content_shadow_3';
     }
+
   ?>
 
-  <body <?php body_class(); ?>>
+  <body <?php body_class($layout); ?>>
     <div class="wrapper limit-width <?php echo $content_shadow; ?>" style="background-color: <?php echo $wrapper_background; ?>;">
 <?php } else { ?>
-  <body <?php body_class(); ?>>
+  <body <?php body_class($layout); ?>>
     <div class="wrapper">
 <?php } ?>

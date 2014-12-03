@@ -42,13 +42,22 @@ function secondthought_customizer_css()
   unset($value); // break the reference with the last element
   ?>
 
+  body {
+    background-color:<?php echo kirki_get_rgba(get_theme_mod( 'my_setting_color' ), get_theme_mod( 'my_setting_opacity' ));?>;
+    background-image: url(<?php echo get_theme_mod( 'my_setting_image' );?>);
+    background-repeat: <?php echo get_theme_mod( 'my_setting_repeat' );?>;
+    background-size: <?php echo get_theme_mod( 'my_setting_size' );?>;
+    background-attachment: <?php echo get_theme_mod( 'my_setting_attach' );?>;
+    background-position: <?php echo get_theme_mod( 'my_setting_position' );?>;
+  }
+
   </style>
   <?php
 }
 add_action('wp_head', 'secondthought_customizer_css');
 
 /**
-* Create the section
+* Create the sections
 */
 function my_custom_sections( $wp_customize ) {
 
@@ -103,7 +112,13 @@ function my_custom_sections( $wp_customize ) {
     'priority' => 200,
     'title'    => __('Page margins', 'secondthought'),
     'panel'    => 'page_setup_panel'
-    ) );
+  ) );
+
+  $wp_customize->add_section( 'layout_section', array(
+    'priority' => 200,
+    'title'    => __('Page layout', 'secondthought'),
+    'panel'    => 'page_setup_panel'
+  ) );
 
   // Edit the defaul settings from wordpress
   $wp_customize->get_section( 'nav' )   -> panel = 'navigation_panel';
@@ -113,216 +128,18 @@ function my_custom_sections( $wp_customize ) {
   add_action( 'customize_register', 'my_custom_sections' );
 
   /**
-  * Create the setting
+  * Create the settings
   */
   function my_custom_setting( $controls ) {
 
-    // Typography settings
-      // Paragraph settings
-      $controls[] = array(
-        'type'     => 'slider',
-        'transport' => 'postMessage',
-        'setting'  => 'paragraph_font_size',
-        'label'    => __( 'Font size', 'secondthought' ),
-        'section'  => 'paragraph_section',
-        'default'  => 16,
-        'priority' => 1,
-        'choices'  => array(
-          'min'  => 10,
-          'max'  => 25,
-          'step' => 1,
-        ),
-      );
-      $controls[] = array(
-        'type'     => 'slider',
-        'transport' => 'postMessage',
-        'setting'  => 'paragraph_line_height',
-        'label'    => __( 'Line height', 'secondthought' ),
-        'section'  => 'paragraph_section',
-        'default'  => 1.5,
-        'priority' => 1,
-        'choices'  => array(
-          'min'  => 1,
-          'max'  => 3,
-          'step' => 0.1,
-        ),
-      );
-      $controls[] = array(
-        'type'     => 'slider',
-        'transport' => 'postMessage',
-        'setting'  => 'paragraph_spacing',
-        'label'    => __( 'Space below', 'secondthought' ),
-        'section'  => 'paragraph_section',
-        'default'  => 25,
-        'priority' => 1,
-        'choices'  => array(
-          'min'  => 1,
-          'max'  => 60,
-          'step' => 1,
-        ),
-      );
-      $controls[] = array(
-        'type'     => 'color',
-        'setting'  => 'paragraph_color',
-        'label'    => __( 'Color', 'secondthought' ),
-        'section'  => 'paragraph_section',
-        'default'  => '#222',
-        'priority' => 1,
-      );
+    // Typography settings (Font sizes, line-height, link-colors etc)
+    require_once( get_template_directory() . '/functions/customizer_settings/typography_settings.php' );
 
-      $arr = array('1', '2', '3', '4', '5', '6');
-      foreach ($arr as &$value) {
+    // Page settings ( background image, margins etc.)
+    require_once( get_template_directory() . '/functions/customizer_settings/page_settings.php' );
 
-        $controls[] = array(
-          'type'     => 'slider',
-          'transport' => 'postMessage',
-          'setting'  => 'h' . $value . '_font_size',
-          'label'    => __( 'Font size', 'secondthought' ),
-          'section'  => 'h' . $value . '_section',
-          'default'  => 32,
-          'priority' => 1,
-          'choices'  => array(
-            'min'  => 10,
-            'max'  => 120,
-            'step' => 1,
-          ),
-        );
-        $controls[] = array(
-          'type'     => 'slider',
-          'transport' => 'postMessage',
-          'setting'  => 'h' . $value . '_line_height',
-          'label'    => __( 'Line height', 'secondthought' ),
-          'section'  => 'h' . $value . '_section',
-          'default'  => 1.5,
-          'priority' => 1,
-          'choices'  => array(
-            'min'  => 1,
-            'max'  => 3,
-            'step' => 0.1,
-          ),
-        );
-        $controls[] = array(
-          'type'     => 'slider',
-          'transport' => 'postMessage',
-          'setting'  => 'h' . $value . '_spacing',
-          'label'    => __( 'Space below', 'secondthought' ),
-          'section'  => 'h' . $value . '_section',
-          'default'  => 25,
-          'priority' => 1,
-          'choices'  => array(
-            'min'  => 1,
-            'max'  => 60,
-            'step' => 1,
-          ),
-        );
-        $controls[] = array(
-          'type'     => 'color',
-          'setting'  => 'h' . $value . '_color',
-          'label'    => __( 'Color', 'secondthought' ),
-          'section'  => 'h' . $value . '_section',
-          'default'  => '#222',
-          'priority' => 1,
-          'transport' => 'postMessage',
-        );
-      }
-      // $arr is now array(2, 4, 6, 8)
-      unset($value); // break the reference with the last element
-
-      // Link colors
-      $controls[] = array(
-        'type'     => 'color',
-        'setting'  => 'link_color',
-        'label'    => __( 'Link color', 'secondthought' ),
-        'section'  => 'link_section',
-        'default'  => '#CE2922',
-        'priority' => 1,
-      );
-      $controls[] = array(
-        'type'     => 'color',
-        'setting'  => 'link_color_hover',
-        'label'    => __( 'Link color on hover', 'secondthought' ),
-        'section'  => 'link_section',
-        'default'  => '#af1c1c',
-        'priority' => 1,
-      );
-
-    // Page Settings
-      // Page Background
-      $controls[] = array(
-        'type'         => 'background',
-        'setting'      => 'my_setting',
-        'label'        => __( 'Background', 'secondthought' ),
-        'description'  =>   __( 'Set background color of image.', 'secondthought' ),
-        'section'      => 'background_section',
-        'default'      => array(
-          'color'    => '#ffffff',
-          'image'    => null,
-          'repeat'   => 'repeat',
-          'size'     => 'inherit',
-          'attach'   => 'inherit',
-          'position' => 'left-top',
-          'opacity'  => 100,
-        ),
-        'priority' => 3,
-        'output' => 'body',
-      );
-
-      // Page Margins
-      $controls[] = array(
-        'type'     => 'radio',
-        'mode'     => 'image',
-        'setting'  => 'page_margins',
-        'label'    => __( 'Page margins', 'secondthought' ),
-        'section'  => 'margin_section',
-        'priority' => 1,
-        'default'  => 0,
-        'choices'  => array(
-          0 => get_template_directory_uri() . '/functions/kirki/assets/images/1c.png',
-          1 => get_template_directory_uri() . '/functions/kirki/assets/images/3cm.png',
-        ),
-      );
-
-      // Page Background color
-      $controls[] = array(
-        'type'     => 'color',
-        'setting'  => 'content_background_color',
-        'label'    => __( 'Content background color', 'secondthought' ),
-        'section'  => 'margin_section',
-        'default'  => '#fff',
-        'priority' => 1,
-      );
-
-      // Page Opacity
-      $controls[] = array(
-        'type'     => 'slider',
-        'setting'  => 'content_background_opacity',
-        'label'    => __( 'Content background opacity', 'secondthought' ),
-        'section'  => 'margin_section',
-        'default'  => 0,
-        'priority' => 1,
-        'choices'  => array(
-          'min'  => 1,
-          'max'  => 100,
-          'step' => 1,
-        ),
-      );
-
-      // Page Margins
-      $controls[] = array(
-        'type'     => 'radio',
-        'mode'     => 'image',
-        'setting'  => 'content_shadow',
-        'label'    => __( 'Margin shadow', 'secondthought' ),
-        'section'  => 'margin_section',
-        'priority' => 1,
-        'default'  => 0,
-        'choices'  => array(
-          0 => get_template_directory_uri() . '/img/customizer/shadow_0.jpg',
-          1 => get_template_directory_uri() . '/img/customizer/shadow_1.jpg',
-          2 => get_template_directory_uri() . '/img/customizer/shadow_2.jpg',
-          3 => get_template_directory_uri() . '/img/customizer/shadow_3.jpg',
-        ),
-      );
+    // Page settings ( background image, margins etc.)
+    require_once( get_template_directory() . '/functions/customizer_settings/layout_settings.php' );
 
 
     return $controls;

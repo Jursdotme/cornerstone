@@ -20,18 +20,14 @@ class Kirki {
 		$options = $this->options;
 
 		// Include files
-		include_once( dirname( __FILE__ ) . '/includes/functions/color-functions.php' );
-
 		if ( ! isset( $options['live_css'] ) || true == $options['live_css'] ) {
 			include_once( dirname( __FILE__ ) . '/includes/functions/background-css.php' );
 		}
 		include_once( dirname( __FILE__ ) . '/includes/functions/required.php' );
-
-		// Include the controls initialization script
-		include_once( dirname( __FILE__ ) . '/includes/controls/controls-init.php' );
-
-		// Include the fonts class
 		include_once( dirname( __FILE__ ) . '/includes/functions/class-Kirki_Fonts.php' );
+		include_once( dirname( __FILE__ ) . '/includes/functions/controls-init.php' );
+		include_once( dirname( __FILE__ ) . '/includes/functions/transport.php' );
+		include_once( dirname( __FILE__ ) . '/includes/functions/color-functions.php' );
 
 		add_action( 'customize_register', array( $this, 'include_files' ), 1 );
 		add_action( 'customize_controls_print_styles', array( $this, 'styles' ) );
@@ -266,17 +262,5 @@ class Kirki {
 }
 
 $kirki = new Kirki();
+
 endif;
-
-function secondthought_customizer_live_preview() {
-
-	wp_enqueue_script(
-	'secondthought-theme-customizer',
-	get_template_directory_uri() . '/build/scripts/theme-customizer.js',
-	array( 'jquery', 'customize-preview' ),
-	'1.0.0',
-	false
-);
-
-}
-add_action( 'customize_preview_init', 'secondthought_customizer_live_preview' );

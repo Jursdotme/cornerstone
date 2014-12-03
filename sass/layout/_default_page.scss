@@ -1,23 +1,48 @@
-.page-template-default:not(.home):not(.buddypress),
-.error404 {
-  main {
-    @include fixed-container;
-    @include pad($gutter*3 $gutter);
-    section {
-      @include media($lg) {
-        @include span-columns(8);
-        @include shift(2);
-      }
-      @include media($md) {
-        @include span-columns(10);
-        @include shift(1);
-      }
-      @include media($sm) {
-        @include span-columns(12);
-      }
-      @include media($xs) {
-        @include span-columns(12);
+body.one-column {
+
+
+
+    main {
+      @include fixed-container;
+      @include pad(1em);
+
+      section {
+        @include media($lg) {
+          @include span-columns(8);
+          @include shift(2);
+        }
+        @include media($md) {
+          @include span-columns(10);
+          @include shift(1);
+        }
+        @include media($sm) {
+          @include span-columns(12);
+        }
+        @include media($xs) {
+          @include span-columns(12);
+        }
       }
     }
+
+}
+
+body.two-column {
+  
+  .content-wrapper {
+    @include fixed-container;
+    @include pad(1em);
   }
+
+  &.sidebar-left {
+    main {
+      @include shift(4);
+      @include pad(0 1em 0 0);
+    }
+  }
+
+    main {
+      @include span-columns(8);
+      @include pad(0 0 0 1em );
+    }
+
 }
